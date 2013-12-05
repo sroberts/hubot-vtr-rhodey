@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- mode: python; encoding: utf-8 -*-
 import GeoIP
 import urllib2
 
