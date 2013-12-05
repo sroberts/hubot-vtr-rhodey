@@ -12,14 +12,15 @@ def hello():
 
 @app.route("/ip/<ip>/geo/maxmind.json")
 def maxmindgeoip(ip):
+  
   gir = gi.record_by_addr(ip)
-  return gir
+  print gir
+  return '%s' % gir
 
-@app.route("/ip/<ip/geo/ipinfo.json")
+@app.route("/ip/<ip>/geo/ipinfo.json")
 def geoip_ipinfo(ip):
-  # Use http://ipinfo.io/8.8.4.4
-  f = urllib2.urlopen('http://www.python.org/')
-  return f.read()
+  f = urllib2.urlopen('http://ipinfo.io/%s/json' % (ip))
+  return '%s' % f.read()
 
 if __name__ == "__main__":
     app.run()
