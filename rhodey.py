@@ -4,6 +4,7 @@
 # flask libraries
 from flask import abort, redirect, url_for
 
+# data specific libraries
 import GeoIP
 import urllib2
 
@@ -23,7 +24,6 @@ def helloworld():
 
 @app.route("/ip/<ip>/geo/maxmind.json")
 def maxmindgeoip(ip):
-  
   gir = gi.record_by_addr(ip)
   print gir
   return '%s' % gir
