@@ -7,6 +7,7 @@ from flask import abort, redirect, url_for
 # data specific libraries
 import GeoIP
 import urllib2
+import json
 
 gi = GeoIP.open("data/GeoLiteCity.dat",GeoIP.GEOIP_STANDARD)
 
@@ -25,8 +26,7 @@ def helloworld():
 @app.route("/ip/<ip>/geo/maxmind.json")
 def maxmindgeoip(ip):
   gir = gi.record_by_addr(ip)
-  print gir
-  return '%s' % gir
+  return '%s' % json.dumps(gir)
 
 @app.route("/ip/<ip>/geo/ipinfo.json")
 def geoip_ipinfo(ip):
@@ -34,4 +34,5 @@ def geoip_ipinfo(ip):
   return '%s' % f.read()
 
 if __name__ == "__main__":
-    app.run()
+  #app.debug = True
+  app.run()
