@@ -33,6 +33,10 @@ def geoip_ipinfo(ip):
   f = urllib2.urlopen('http://ipinfo.io/%s/json' % (ip))
   return '%s' % f.read()
 
+@app.route("/ip/<ip>/ipvoid/ipvoid.json")
+def ipvoid(ip):
+    return
+
 if __name__ == "__main__":
   #app.debug = True
   app.run()
