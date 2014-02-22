@@ -8,6 +8,9 @@ from flask import abort, redirect, url_for
 import GeoIP
 import urllib2
 import json
+import requests
+from bs4 import BeautifulSoup as bs
+
 
 gi = GeoIP.open("data/GeoLiteCity.dat",GeoIP.GEOIP_STANDARD)
 
@@ -35,7 +38,19 @@ def geoip_ipinfo(ip):
 
 @app.route("/ip/<ip>/ipvoid/ipvoid.json")
 def ipvoid(ip):
-    return
+    r = requests.get('http://www.ipvoid.com/scan/'+ip+'/')
+    data = bs(r.text)
+    return_list = []
+    if data.findAll('span', attrs={'class': 'label label-success'}):
+        return "Site is clean according to latest scan"
+    elif data.findAll('span', attrs={'class': 'label label-danger'}):
+        for each in data.findAll('img', alt='Alert'):
+            detect_site = each.parent.parent.td.text.lstrip()
+            detect_url = each.parent.a['href']
+            return_list.append({'site': detect_site, 'info_url': detect_url})
+    else:
+        return "Could not find a decision"
+    return '%s' % json.dumps(return_list)
 
 if __name__ == "__main__":
   #app.debug = True
