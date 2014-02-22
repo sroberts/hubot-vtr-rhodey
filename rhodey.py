@@ -58,6 +58,25 @@ def ipvoid(ip):
     return '%s' % json.dumps(return_list)
 
 
+@app.route("/name/<name>/url/urlvoid.json")
+def urlvoid(name):
+    r = requests.get('http://www.urlvoid.com/scan/'+name+'/')
+    data = bs(r.text)
+    return_list = []
+    if data.findAll('div', attrs={'bs-callout bs-callout-info'}):
+        return "Site is clean according to latest scan"
+    elif data.findAll('div', attrs={'class': 'bs-callout bs-callout-warning'}):
+        for each in data.findAll('img', alt='Alert'):
+            detect_site = each.parent.parent.td.text.lstrip()
+            detect_url = each.parent.a['href']
+            return_list.append({'site': detect_site, 'info_url': detect_url})
+    else:
+        return "Could not find a decision"
+    if len(return_list) == 0:
+        return "No major warning for site"
+    return '%s' % json.dumps(return_list)
+
+
 if __name__ == "__main__":
   #app.debug = True
   app.run()
