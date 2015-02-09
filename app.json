@@ -1,0 +1,7 @@
+{
+  "name": "Hubot-VTR: Rhodey",
+  "description": "A webapp to REST-ize common security tools",
+  "repository": "https://github.com/sroberts/hubot-vtr-rhodey",
+  "logo": "http://www.ironmanarmory.com/warmachine_files/wmunmasked.jpg",
+  "keywords": ["python", "hubot", "security"]
+}

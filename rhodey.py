@@ -5,14 +5,10 @@
 from flask import abort, redirect, url_for
 
 # data specific libraries
-import GeoIP
 import urllib2
 import json
 import requests
 from bs4 import BeautifulSoup as bs
-
-
-gi = GeoIP.open("data/GeoLiteCity.dat", GeoIP.GEOIP_STANDARD)
 
 from flask import Flask
 app = Flask(__name__)
@@ -37,6 +33,7 @@ def maxmindgeoip(ip):
 
 @app.route("/ip/<ip>/geo/ipinfo.json")
 def geoip_ipinfo(ip):
+
   f = urllib2.urlopen('http://ipinfo.io/%s/json' % (ip))
   return '%s' % f.read()
 
